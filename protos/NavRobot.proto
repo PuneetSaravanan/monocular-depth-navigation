@@ -1,0 +1,53 @@
+#VRML_SIM R2025a utf8
+# NavRobot — a Pioneer 3-AT pre-equipped with the full sensor suite used by all
+# three navigation controllers, so every course world instantiates an identical
+# robot (same camera, same sonars, same collision bumper). Only the `controller`
+# field changes between depth / classical-CV / sonar runs.
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/adept/pioneer3/protos/Pioneer3at.proto"
+
+PROTO NavRobot [
+  field SFVec3f    translation 0 0 0.15
+  field SFRotation rotation    0 0 1 0
+  field SFString   controller  "depth_nav"
+  field SFString   name        "Pioneer 3-AT"
+]
+{
+  Pioneer3at {
+    translation IS translation
+    rotation IS rotation
+    controller IS controller
+    name IS name
+    supervisor TRUE   # lets the controller call simulationQuit() at run end
+    extensionSlot [
+      # Forward-facing camera (no rotation => looks along robot +x = forward).
+      Camera {
+        translation 0.2 0 0.35
+        name "camera"
+        width 256
+        height 256
+        fieldOfView 1.05
+      }
+      # Ground-truth pose for distance / completion logging.
+      GPS {
+        name "gps"
+      }
+      # On-screen panel for the live (depth / edge / sonar) visualization.
+      Display {
+        name "depth_display"
+        width 256
+        height 256
+      }
+      # Collision bumper: a shell around the body at mid-height. Triggers on
+      # contact with walls/boxes (which are >=0.4 m tall) but not the floor.
+      TouchSensor {
+        translation 0 0 0.18
+        name "bumper"
+        type "bumper"
+        boundingObject Box {
+          size 0.52 0.50 0.18
+        }
+      }
+    ]
+  }
+}

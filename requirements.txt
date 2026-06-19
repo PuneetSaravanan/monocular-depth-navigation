@@ -1,0 +1,14 @@
+# Python deps for the depth-based navigation controllers.
+# Tested on macOS (Apple Silicon, M4) with Python 3.10 in a conda env `depthnav`.
+# PyTorch uses the Metal (MPS) backend automatically on Apple Silicon; on an
+# NVIDIA machine the same code falls back to CUDA, and on anything else to CPU.
+#
+# Note: the Webots `controller` module is NOT a pip package — it ships with
+# Webots and is injected at runtime by the runtime.ini interpreter wiring.
+
+torch>=2.2
+torchvision>=0.17
+timm>=0.9          # required by MiDaS-Small (torch.hub)
+opencv-python>=4.8
+numpy>=1.24
+matplotlib>=3.7    # depth-map visualization + results plots

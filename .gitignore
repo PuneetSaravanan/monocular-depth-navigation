@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Webots auto-generated per-world project state
+*.wbproj
+.*.wbproj
+
+# Torch hub cache / downloaded model weights (large; re-downloaded on first run)
+*.pt
+*.pth
+
+# Local logs and captured media (keep curated results under eval/results/)
+*.log
+/tmp/
+docs/recordings/
+
+# OS cruft
+.DS_Store
+._*
+
+# Local editor / agent config
+.claude/
